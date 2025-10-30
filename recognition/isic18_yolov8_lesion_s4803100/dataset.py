@@ -51,3 +51,46 @@ def _make_mask_map():
             base = m.name.replace("_segmentation.png", "")
             mask_map[base] = m
     return mask_map
+
+def prepare_splits(seed: int = 1337, train_ratio=0.70, val_ratio=0.15):
+    set_seed(seed)
+    for sub in ["train", "val", "test"]:
+        ensure_dir(IMG_OUT / sub)
+        ensure_dir(LBL_OUT / sub)
+
+    imgs = list_images(IMG_DIR)
+    assert imgs, f"No images found in {IMG_DIR}"
+    mask_map = _make_mask_map()
+
+    pairs = []
+    for img in imgs:
+        base = img.stem  # ISIC_XXXXXXX
+        msk = mask_map.get(base)
+        if msk is not None:
+            pairs.append((img, msk))
+
+    random.shuffle(pairs)
+    n = len(pairs)
+    n_train = int(n * train_ratio)
+    n_val   = int(n * val_ratio)
+    train_pairs = pairs[:n_train]
+    val_pairs   = pairs[n_train:n_train+n_val]
+    test_pairs  = pairs[n_train+n_val:]
+
+    print(f"[INFO] ISIC paired samples: {n} "
+          f"(train={len(train_pairs)}, val={len(val_pairs)}, test={len(test_pairs)})")
+
+    from shutil import copy2
+    def convert(split_name, split_pairs):
+        for img_path, msk_path in split_pairs:
+            out_img = IMG_OUT / split_name / img_path.name
+            out_lbl = LBL_OUT / split_name / img_path.with_suffix(".txt").name
+            copy2(img_path, out_img)
+            mask = io.imread(msk_path)
+            if mask.ndim == 3:
+                mask = mask[..., 0]
+            bboxes = mask_to_bboxes(mask)
+            write_yolo_label(out_lbl, bboxes)
+
+if __name__ == "__main__":
+    prepare_splits()
