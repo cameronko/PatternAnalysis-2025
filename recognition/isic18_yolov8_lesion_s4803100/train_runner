@@ -1,0 +1,10 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --gres=gpu:1
+#SBATCH --partition=a100
+#SBATCH --job-name=train
+#SBATCH -o train.out
+conda activate comp3710
+python train.py
