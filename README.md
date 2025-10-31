@@ -6,16 +6,16 @@
 
 ## Overview
 
-This project implements **Task 5** from the **ISIC 2018 Challenge**, focusing on **lesion localization and classification** in dermoscopic skin images — a clinically significant problem in melanoma screening.  
+This project implements **Task 5** from the **ISIC 2018 Challenge**, focusing on **lesion localisation and classification** in dermoscopic skin images — a clinically significant problem in melanoma screening.  
 The approach applies a **YOLOv8-based object detection algorithm**, enabling automatic lesion bounding box prediction. This contributes to **real-time lesion analysis** pipelines by reducing manual annotation effort.
 
 ---
 
 ## Algorithm Description and Working Principle
 
-The **YOLOv8s** model was fine-tuned for single-class detection (*lesion*) using annotated dermoscopic images. YOLO (You Only Look Once) performs **end-to-end regression** to directly predict bounding boxes and class probabilities in a single forward pass, optimizing for:
+The **YOLOv8s** model was fine-tuned for single-class detection (*lesion*) using annotated dermoscopic images. YOLO (You Only Look Once) performs **end-to-end regression** to directly predict bounding boxes and class probabilities in a single forward pass, optimising for:
 
-- **Localization loss:** bounding box IoU-based penalty  
+- **Localisation loss:** bounding box IoU-based penalty  
 - **Classification loss:** lesion vs. background confidence  
 - **Distribution Focal Loss (DFL):** refining bounding box regression  
 
@@ -35,7 +35,7 @@ A schematic workflow is shown below:
 ### Preprocessing Steps
 
 - Masks converted to YOLO bounding boxes using `skimage.measure.label()`  
-- Labels written as normalized `(xc, yc, w, h)` coordinates  
+- Labels written as normalised `(xc, yc, w, h)` coordinates  
 - Images and labels split into **train/val/test** folders using `Dataset.py`
 
 ### Train/Validation/Test Split Justification
@@ -56,7 +56,7 @@ Given dataset constraints (`ISIC2018_Task1-2_Training_Input_x2` and ground truth
 |------------|--------|
 | **Model** | YOLOv8s (Ultralytics v8.1.0) |
 | **Framework** | PyTorch 2.2.0 |
-| **Optimizer** | AdamW |
+| **Optimiser** | AdamW |
 | **Epochs** | 50 |
 | **Batch Size** | 16 |
 | **Image Size** | 640×640 |
@@ -70,7 +70,7 @@ Results were reproducible by setting a **fixed seed (1337)** in `Dataset.py`.
 
 ## Training and Validation Results
 
-The model demonstrated smooth convergence and consistent generalization.
+The model demonstrated smooth convergence and consistent generalisation.
 
 ![Training Results](model/train_results/results.png)
 
@@ -81,7 +81,7 @@ The model demonstrated smooth convergence and consistent generalization.
 | **mAP@0.5** | 0.97 |
 | **mAP@0.5–0.95** | 0.75 |
 
-**Interpretation:** High precision–recall balance indicates strong model generalization without overfitting.
+**Interpretation:** High precision–recall balance indicates strong model generalisation without overfitting.
 
 ---
 
@@ -96,18 +96,18 @@ These results exceed the **0.8 IoU requirement** specified in the COMP3710 assig
 
 ### Confusion Matrices
 
-| Normalized | Absolute |
+| Normalised | Absolute |
 |-------------|-----------|
-| ![Confusion Matrix Normalized](model/train_results/confusion_matrix_normalized.png) | ![Confusion Matrix](model/train_results/confusion_matrix.png) |
+| ![Confusion Matrix Normalised](model/train_results/confusion_matrix_normalized.png) | ![Confusion Matrix](model/train_results/confusion_matrix.png) |
 
 ---
 
-## Additional Metrics and Visualizations
+## Additional Metrics and Visualisations
 
 | Metric Curve | Description |
 |---------------|-------------|
 | ![F1 Curve](model/train_results/F1_curve.png) | Optimal F1-score ≈ 0.95 @ 0.57 confidence |
-| ![PR Curve](model/train_results/PR_curve.png) | Strong precision-recall tradeoff |
+| ![PR Curve](model/train_results/PR_curve.png) | Strong precision–recall trade-off |
 | ![Labels](model/train_results/labels.jpg) | Balanced spatial label distribution |
 
 ---
@@ -149,21 +149,21 @@ Reproducibility ensured by deterministic seeding in `Dataset.py` (`set_seed(1337
 | ![GT](assets/train_batch1.jpg) | ![Pred](assets/val_batch1_pred.jpg) |
 
 **Inference Speed:** ~10 ms/image on A100 GPU  
-**Result:** Accurate lesion localization and strong box alignment.
+**Result:** Accurate lesion localisation and strong box alignment.
 
 ---
 
 ## Discussion and Limitations
 
 - Slight underestimation of bounding boxes for low-contrast lesions.  
-- Model optimized for **single-class lesion detection**, not multi-type classification.  
+- Model optimised for **single-class lesion detection**, not multi-type classification.  
 - Future work: integrate lesion type classification and cross-year ISIC datasets (e.g., 2020 Kaggle).
 
 ---
 
 ## References
 
-1. 5. Jahan, M.K., Bhuiyan, F.I., Al Amin, Mridha, M.F., Safran, M., Alfarhood, S., & Che, D. (2025). *Enhancing the YOLOv8 model for real-time object detection to ensure online platform safety.* Scientific Reports, 15, 21167. [https://doi.org/10.1038/s41598-025-08413-4](https://doi.org/10.1038/s41598-025-08413-4)
+1. Jahan, M.K., Bhuiyan, F.I., Al Amin, Mridha, M.F., Safran, M., Alfarhood, S., & Che, D. (2025). *Enhancing the YOLOv8 model for real-time object detection to ensure online platform safety.* *Scientific Reports, 15*, 21167. [https://doi.org/10.1038/s41598-025-08413-4](https://doi.org/10.1038/s41598-025-08413-4)  
 2. ISIC 2018 Challenge Dataset: [https://challenge.isic-archive.com/data/#2018](https://challenge.isic-archive.com/data/#2018)  
 
 ---
@@ -173,10 +173,10 @@ Reproducibility ensured by deterministic seeding in `Dataset.py` (`set_seed(1337
 The implemented **YOLOv8 lesion detector** satisfies all COMP3710 Task 5 criteria:
 - Achieves **IoU ≥ 0.8 on test set**
 - Demonstrates reproducibility via seed and environment control  
-- Provides clear documentation, visualization, and justification of data splits  
+- Provides clear documentation, visualisation, and justification of data splits  
 
-This solution demonstrates how **modern object detection** can effectively localize lesions for automated skin cancer screening workflows.
+This solution demonstrates how **modern object detection** can effectively localise lesions for automated skin cancer screening workflows.
 
 ---
 
-*AI Usage: AI models such as OpenAI's ChatGPT 5 was used to brainstorm the model pipeline such as data preprocessing, which pretrained YOLO to use, and model fine tuning for efficiency and accuracy. It was also used to help format images and tables in markdown.*
+*AI Usage: AI models such as OpenAI’s ChatGPT 5 were used to brainstorm the model pipeline, including data preprocessing, pretrained YOLO selection, and model fine-tuning for efficiency and accuracy. It was also used to help format images and tables in Markdown.*
