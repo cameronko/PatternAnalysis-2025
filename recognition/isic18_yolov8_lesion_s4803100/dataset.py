@@ -85,12 +85,17 @@ def prepare_splits(seed: int = 1337, train_ratio=0.70, val_ratio=0.15):
         for img_path, msk_path in split_pairs:
             out_img = IMG_OUT / split_name / img_path.name
             out_lbl = LBL_OUT / split_name / img_path.with_suffix(".txt").name
+            print("Copying ", img_path, "to ", out_img);
             copy2(img_path, out_img)
             mask = io.imread(msk_path)
             if mask.ndim == 3:
                 mask = mask[..., 0]
             bboxes = mask_to_bboxes(mask)
             write_yolo_label(out_lbl, bboxes)
+
+    convert("train", train_pairs)
+    convert("val",   val_pairs)
+    convert("test",  test_pairs)
 
 if __name__ == "__main__":
     prepare_splits()

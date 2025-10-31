@@ -1,4 +1,4 @@
-path: data_yolo_isic18
+path: /home/Student/s4803100/COMP3710-Report-A3/PatternAnalysis-2025/recognition/isic18_yolov8_lesion_s4803100/data_yolo_isic18
 train: images/train
 val: images/val
 test: images/test
