@@ -1,5 +1,6 @@
 # ISIC 2018 Lesion Detection — Task 5  
 **COMP3710 – Project Report**
+
 **Author:** *Cameron Kontkanen*
 
 ---
