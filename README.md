@@ -163,9 +163,8 @@ Reproducibility ensured by deterministic seeding in `Dataset.py` (`set_seed(1337
 
 ## References
 
-1. Ronneberger et al., *U-Net: Convolutional Networks for Biomedical Image Segmentation*, MICCAI 2015.  
-2. Redmon et al., *YOLO: Real-Time Object Detection*, CVPR 2016.  
-3. ISIC 2018 Challenge Dataset: [https://challenge.isic-archive.com/data/#2018](https://challenge.isic-archive.com/data/#2018)  
+1. 5. Jahan, M.K., Bhuiyan, F.I., Al Amin, Mridha, M.F., Safran, M., Alfarhood, S., & Che, D. (2025). *Enhancing the YOLOv8 model for real-time object detection to ensure online platform safety.* Scientific Reports, 15, 21167. [https://doi.org/10.1038/s41598-025-08413-4](https://doi.org/10.1038/s41598-025-08413-4)
+2. ISIC 2018 Challenge Dataset: [https://challenge.isic-archive.com/data/#2018](https://challenge.isic-archive.com/data/#2018)  
 
 ---
 
